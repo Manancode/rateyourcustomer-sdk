@@ -1,19 +1,33 @@
 {
     "name": "rate-your-customer-sdk",
-    "version": "1.0.1",
-    "description": "SDK for integrating with RateYourCustomer SaaS platform.",
-    "main": "src/index.js",
-    "types": "src/index.d.ts",
+    "version": "1.0.2",
+    "description": "SDK for integrating with RateYourCustomer SaaS platform. Supports both ES Modules and CommonJS.",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/index.d.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "npm run build:commonjs && npm run build:esm",
+        "build:commonjs": "tsc --module commonjs --outDir dist/cjs",
+        "build:esm": "tsc --module esnext --outDir dist/esm",
+        "clean": "rm -rf dist",
+        "prepublishOnly": "npm run clean && npm run build"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/Manancode/rateyourcustomer-sdk.git"
     },
-    "author": "Manan Arora",
+    "author": "Rateyourcustomer",
     "license": "MIT",
     "dependencies": {
         "axios": "^0.27.2"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.24.8",
+        "@babel/core": "^7.25.2",
+        "@babel/plugin-transform-modules-commonjs": "^7.21.0",
+        "@babel/preset-env": "^7.25.3",
+        "@types/node": "^20.14.15",
+        "typescript": "^5.5.4"
     }
 }

@@ -1,16 +1,16 @@
 declare class RateYourCustomer {
+    apiKey: string;
+    baseUrl: string;
     constructor(apiKey: string, baseUrl?: string);
-  
     trackEvent(eventType: string, payload: any): Promise<any>;
-  
-    trackPaymentReceived(customerId: string, userId: string, amount: number, currency: string, paymentDate: string): Promise<any>;
-    trackPaymentMissed(customerId: string, userId: string, amount: number, currency: string, dueDate: string): Promise<any>;
-    trackPaymentTermsChanged(customerId: string, userId: string, oldTerms: any, newTerms: any, changeDate: string): Promise<any>;
+    trackPaymentReceived(customerId: string, userId: string, amount: number, currency: string, paymentDate: Date): Promise<any>;
+    trackPaymentMissed(customerId: string, userId: string, amount: number, currency: string, dueDate: Date): Promise<any>;
+    trackPaymentTermsChanged(customerId: string, userId: string, oldTerms: string, newTerms: string, changeDate: Date): Promise<any>;
     trackOrderPlaced(customerId: string, userId: string, orderId: string, total: number, items: any[]): Promise<any>;
     trackOrderUpdated(customerId: string, userId: string, orderId: string, changes: any): Promise<any>;
     trackOrderCancelled(customerId: string, userId: string, orderId: string, reason: string): Promise<any>;
     trackLifetimeValueUpdated(customerId: string, userId: string, oldValue: number, newValue: number): Promise<any>;
-    trackLifetimeValueCalculated(customerId: string, userId: string, value: number, calculationDate: string): Promise<any>;
+    trackLifetimeValueCalculated(customerId: string, userId: string, value: number, calculationDate: Date): Promise<any>;
     trackProductUsageUpdated(customerId: string, userId: string, productId: string, usageMetrics: any): Promise<any>;
     trackFeatureUsageDeclined(customerId: string, userId: string, featureId: string, declinePercentage: number): Promise<any>;
     trackPurchaseFrequencyChanged(customerId: string, userId: string, oldFrequency: number, newFrequency: number): Promise<any>;
@@ -29,12 +29,9 @@ declare class RateYourCustomer {
     trackContractCreated(customerId: string, userId: string, contractId: string, terms: any): Promise<any>;
     trackContractUpdated(customerId: string, userId: string, contractId: string, changes: any): Promise<any>;
     trackContractTerminated(customerId: string, userId: string, contractId: string, reason: string): Promise<any>;
-    trackAccountHealthUpdated(customerId: string, userId: string, oldHealth: string, newHealth: string): Promise<any>;
+    trackAccountHealthUpdated(customerId: string, userId: string, oldHealth: any, newHealth: any): Promise<any>;
     trackAccountAtRisk(customerId: string, userId: string, riskFactors: any): Promise<any>;
     trackResourceDownloaded(customerId: string, userId: string, resourceId: string, resourceType: string): Promise<any>;
     trackSupportArticleViewed(customerId: string, userId: string, articleId: string, articleTitle: string): Promise<any>;
-    trackAverageOrderValueUpdated(customerId: string, userId: string, oldValue: number, newValue: number): Promise<any>;
-    trackCustomerRatingUpdated(customerId: string, userId: string, oldRating: number, newRating: number): Promise<any>;
-  }
-  
-  export default RateYourCustomer;
+}
+export default RateYourCustomer;
