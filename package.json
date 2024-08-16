@@ -1,6 +1,6 @@
 {
     "name": "rate-your-customer-sdk",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "description": "SDK for integrating with RateYourCustomer SaaS platform. Supports both ES Modules and CommonJS.",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.js",
