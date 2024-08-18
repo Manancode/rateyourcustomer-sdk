@@ -1,16 +1,24 @@
 {
     "name": "rate-your-customer-sdk",
-    "version": "1.0.7",
+    "version": "1.0.11",
     "description": "SDK for integrating with RateYourCustomer SaaS platform. Supports both ES Modules and CommonJS.",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.js",
     "types": "./dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "npm run build:commonjs && npm run build:esm",
+        "build": "npm run build:commonjs && npm run build:esm && npm run build:types",
         "build:commonjs": "tsc --module commonjs --outDir dist/cjs",
+        "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
         "build:esm": "tsc --module esnext --outDir dist/esm",
-        "clean": "rm -rf dist",
+        "clean": "rimraf dist",
         "prepublishOnly": "npm run clean && npm run build"
     },
     "repository": {
@@ -20,14 +28,12 @@
     "author": "Rateyourcustomer",
     "license": "MIT",
     "dependencies": {
-        "axios": "^0.27.2"
+        "axios": "^0.27.2",
+        "node-cache": "^5.1.2"
     },
     "devDependencies": {
-        "@babel/cli": "^7.24.8",
-        "@babel/core": "^7.25.2",
-        "@babel/plugin-transform-modules-commonjs": "^7.21.0",
-        "@babel/preset-env": "^7.25.3",
         "@types/node": "^20.14.15",
+        "rimraf": "^6.0.1",
         "typescript": "^5.5.4"
     }
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 class RateYourCustomer {
     apiKey;
     baseUrl;
-    constructor(apiKey, baseUrl = 'https://rateyourcustomer.vercel.app/api') {
+    constructor(apiKey, baseUrl = 'http://localhost:3002/api') {
         this.apiKey = apiKey;
         this.baseUrl = baseUrl;
     }
@@ -145,4 +145,3 @@ class RateYourCustomer {
     }
 }
 export default RateYourCustomer;
-module.exports = RateYourCustomer;

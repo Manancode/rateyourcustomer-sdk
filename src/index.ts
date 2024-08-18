@@ -1,15 +1,26 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+import NodeCache from 'node-cache';
 
 class RateYourCustomer {
-    apiKey: string;
-    baseUrl: string;
+    private apiKey: string;
+    private baseUrl: string;
+    private cache: NodeCache;
 
-    constructor(apiKey: string, baseUrl = 'https://rateyourcustomer.vercel.app/api') {
+    constructor(apiKey: string, baseUrl = 'http://localhost:3002/api') {
         this.apiKey = apiKey;
         this.baseUrl = baseUrl;
+        this.cache = new NodeCache({ stdTTL: 300 });
     }
 
     async trackEvent(eventType: string, payload: any): Promise<any> {
+        const cacheKey = `${eventType}-${JSON.stringify(payload)}`;
+        const cachedResponse = this.cache.get(cacheKey);
+
+        if (cachedResponse) {
+            console.log(`Using cached response for event ${eventType}`);
+            return cachedResponse;
+        }
+
         try {
             const response = await axios.post(
                 `${this.baseUrl}/webhook-event`,
@@ -17,6 +28,8 @@ class RateYourCustomer {
                 { headers: { 'x-api-key': this.apiKey } }
             );
             console.log(`Event ${eventType} sent successfully`);
+
+            this.cache.set(cacheKey, response.data);
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -27,7 +40,7 @@ class RateYourCustomer {
             throw error;
         }
     }
-
+    
     async trackPaymentReceived( customerId: number, amount: number, paymentDate: string) {
         const payload = { customerId , additionalData : {amount, paymentDate } };
         return this.trackEvent('PAYMENT_RECEIVED', payload);                                                            
@@ -182,4 +195,4 @@ class RateYourCustomer {
 }
 
 export default RateYourCustomer;
-module.exports = RateYourCustomer;
+
